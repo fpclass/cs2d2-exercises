@@ -1,0 +1,38 @@
+\documentclass[]{uow-exercises}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{minted}
+\usepackage[
+backgroundcolor = gray!5
+, hidealllines=true
+]{mdframed}
+
+\surroundwithmdframed{minted}
+\usemintedstyle{lovelace}
+
+\author{Michael B. Gale}
+\title{CS2D2}
+
+\setminted[haskell]{fontsize=\small}
+\setminted[bash]{fontsize=\small}
+\newcommand{\haskellIn}[1]{\mintinline[fontsize=\small]{haskell}{#1}}
+\newcommand{\bashIn}[1]{\mintinline[fontsize=\small]{bash}{#1}}
+\newcommand{\tsIn}[1]{\mintinline[fontsize=\small]{typescript}{#1}}
+
+\begin{document}
+	
+%\textbf{Sutton Trust Summer School}\\[0.2cm]
+
+\fancyhead[LE, RO]{\emph{CS2D2 Programming Paradigms}}
+\pagestyle{fancy}
+\thispagestyle{fancy}
+
+\begin{center}
+    \textbf{\LARGE CS2D2 Exercises - Friday}
+\end{center} \hrule \vspace{0.5cm}
+
+\input{scripting.tex}
+	
+\end{document}

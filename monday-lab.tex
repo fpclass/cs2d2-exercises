@@ -1,0 +1,43 @@
+\documentclass[]{uow-exercises}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{minted}
+\usepackage[
+backgroundcolor = gray!5
+, hidealllines=true
+]{mdframed}
+
+\surroundwithmdframed{minted}
+\usemintedstyle{lovelace}
+
+\author{Michael B. Gale}
+\title{CS2D2}
+
+\setminted[haskell]{fontsize=\small}
+\setminted[bash]{fontsize=\small}
+\newcommand{\haskellIn}[1]{\mintinline[fontsize=\small]{haskell}{#1}}
+\newcommand{\bashIn}[1]{\mintinline[fontsize=\small]{bash}{#1}}
+
+\begin{document}
+
+\fancyhead[LE, RO]{\emph{CS2D2 Programming Paradigms}}
+\pagestyle{fancy}
+\thispagestyle{fancy}
+
+\begin{center}
+    \textbf{\LARGE CS2D2 Exercises - Monday}
+\end{center} \hrule \vspace{0.5cm}
+
+This document contains exercises, which you are encouraged to work on during the CS2D2 labs as well as during your self-study time. You may find some of the exercises very easy as they are just designed to refresh your knowledge while you may find that you cannot complete others in the time allocated for the labs. All of this is perfectly alright and the main goal is for you to have fun and be able to practice what we cover in the lectures!
+To get started, download the archive with the skeleton codes for today’s lab from:
+\begin{center}\small
+    \url{https://warwick.ac.uk/fac/sci/dcs/teaching/material/cs2d2/java.zip}
+\end{center}
+
+The best way to complete the exercises is on the DCS machines, although we can tell you what you would need to get things to work on your own machine as well. Getting things set up on your own machine might take some time, so it is best to do that outside of allocated teaching times.
+
+\input{java.tex}
+	
+\end{document}

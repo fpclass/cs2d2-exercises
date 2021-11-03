@@ -1,0 +1,41 @@
+\documentclass[]{uow-exercises}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{minted}
+\usepackage[
+backgroundcolor = gray!5
+, hidealllines=true
+]{mdframed}
+
+\surroundwithmdframed{minted}
+\usemintedstyle{lovelace}
+
+\author{Michael B. Gale}
+\title{CS2D2}
+
+\setminted[haskell]{fontsize=\small}
+\setminted[bash]{fontsize=\small}
+\newcommand{\haskellIn}[1]{\mintinline[fontsize=\small]{haskell}{#1}}
+\newcommand{\bashIn}[1]{\mintinline[fontsize=\small]{bash}{#1}}
+
+\begin{document}
+
+\fancyhead[LE, RO]{\emph{CS2D2 Programming Paradigms}}
+\pagestyle{fancy}
+\thispagestyle{fancy}
+
+\begin{center}
+    \textbf{\LARGE CS2D2 Exercises - Thursday}
+\end{center} \hrule \vspace{0.5cm}
+
+To get started, download the archive with the skeleton codes for this lab from:
+\begin{center}\footnotesize
+    \url{https://warwick.ac.uk/fac/sci/dcs/teaching/material/cs2d2/thursday.zip}
+\end{center}
+
+\input{types.tex}
+\input{rust.tex}
+	
+\end{document}

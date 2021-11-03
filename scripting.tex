@@ -1,0 +1,69 @@
+\section{Friday morning - Scripting languages}
+
+For this lab, you will implement a browser-based version of Picross in TypeScript, which has a pretty, purple UI. We have prepared a skeleton which you can access at the following address:
+
+\begin{center}\small
+    \texttt{https://codesandbox.io/s/jovial-rgb-4zums?file=/src/index.ts}
+\end{center}
+
+Click on ``fork'' in the top right to create a copy that you can edit.
+
+\taskLine
+
+\task{There are a number of type definitions at the top of the \texttt{\small index.ts} file, which you should familiarise yourself with.}
+
+\task{Complete the definition of \tsIn{makeBlank} which, given a value of type \tsIn{Grid} (an array of arrays of \tsIn{State} values) should return a new \tsIn{Grid} value with the same dimensions as the input, except that all cells should contain the value \tsIn{State.Unknown} in it.}
+
+TypeScript offers several different approaches you could take for traversing the given grid: you could use a \tsIn{for} loop or the \tsIn{foreach} method of arrays:
+
+\begin{minted}{typescript}
+for(let i = 0; i < arr.length; i++) {
+    const item = arr[i];
+    // do something with item or i
+}
+
+arr.forEach(item => {
+    // do something with item
+});
+
+arr.forEach((item, i) => {
+    // do something with item or i
+});
+\end{minted}
+You can use the \tsIn{push} method of arrays to append elements to them.
+
+Once implemented correctly, you should see a black square in the preview on the right that you can click on to toggle the state of cells in the grid. Black represents unknown, white represents filled, and purple is empty.
+
+\pagebreak
+
+\task{Implement the \tsIn{transpose} function which should \emph{transpose} a grid. That is, it should turn an array of rows into an array of columns. For example:}
+\begin{minted}{typescript}
+transpose([[1,2], [3,4], [5,6]]) => [[1,3,4], [2,4,6]]
+\end{minted}
+
+\task{Implement the \tsIn{sequences} function which, given a \tsIn{Row} value, should generate a \tsIn{Hint} value for it (an array of numbers representing the uninterrupted sequences of filled cells in the row). For the purpose of this function, \tsIn{State.Empty} and \tsIn{State.Unknown} should be treated equivalently. For example:}
+\begin{minted}{typescript}
+sequences(
+  [ State.Filled, State.Filled
+  , State.Empty, State.Filled
+  , State.Filled, State.Filled
+  ]
+) => [2,3]
+sequences(
+  [ State.Filled, State.Empty
+  , State.Filled, State.Unknown
+  , State.Filled
+  ]
+) => [1,1,1]
+sequences([State.Empty,State.Unknown,State.Empty]) => []
+\end{minted}
+Once implemented, you should see the row and columns hints appear in the preview on the right. You can play the game now!
+
+\task{Implement \tsIn{isValid} which, given a \tsIn{Row} value and a \tsIn{Hint} value, should determine whether the row satisfies the given hint. For example:}
+\begin{minted}{typescript}
+isValid([State.Empty, State.Empty], [1]) => false 
+isValid([State.Filled, State.Empty], [1]) => true
+isValid([State.Filled, State.Filled], [1]) => false
+isValid([State.Filled, State.Unknown], [1]) => true
+\end{minted}
+\emph{Hint:} it might help you to use the \tsIn{sequences} function in the implementation of this one.

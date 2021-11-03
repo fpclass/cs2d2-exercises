@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Compile coursework specification
+        uses: dante-ev/latex-action@v0.2.0
+        with:
+          root_file: coursework.tex
+          args: -bibtex -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -latexoption=-shell-escape -latexoption=-synctex=1
+
+      - name: Upload build artifact (coursework specification)
+        uses: actions/upload-artifact@v2
+        with:
+          name: coursework.pdf
+          path: coursework.pdf
+
+      - name: Compile Monday lab sheet
+        uses: dante-ev/latex-action@v0.2.0
+        with:
+          root_file: monday-lab.tex
+          args: -bibtex -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -latexoption=-shell-escape -latexoption=-synctex=1
+
+      - name: Upload build artifact (Monday lab sheet)
+        uses: actions/upload-artifact@v2
+        with:
+          name: monday-lab.pdf
+          path: monday-lab.pdf
+
+      - name: Compile Wednesday lab sheet
+        uses: dante-ev/latex-action@v0.2.0
+        with:
+          root_file: wednesday-labs.tex
+          args: -bibtex -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -latexoption=-shell-escape -latexoption=-synctex=1
+
+      - name: Upload build artifact (Wednesday lab sheet)
+        uses: actions/upload-artifact@v2
+        with:
+          name: wednesday-labs.pdf
+          path: wednesday-labs.pdf
+
+      - name: Compile Thursday lab sheet
+        uses: dante-ev/latex-action@v0.2.0
+        with:
+          root_file: thursday-labs.tex
+          args: -bibtex -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -latexoption=-shell-escape -latexoption=-synctex=1
+
+      - name: Upload build artifact (Thursday lab sheet)
+        uses: actions/upload-artifact@v2
+        with:
+          name: thursday-labs.pdf
+          path: thursday-labs.pdf
+
+      - name: Compile Friday lab sheet
+        uses: dante-ev/latex-action@v0.2.0
+        with:
+          root_file: friday-lab.tex
+          args: -bibtex -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -latexoption=-shell-escape -latexoption=-synctex=1
+
+      - name: Upload build artifact (Friday lab sheet)
+        uses: actions/upload-artifact@v2
+        with:
+          name: friday-lab.pdf
+          path: friday-lab.pdf

@@ -1,0 +1,81 @@
+\section{Wednesday morning - Functional Programming}
+
+Open Visual Studio Code and open the \texttt{\small lab-fp} folder you have extracted from the \texttt{haskell.zip} archive (File > Add folder to workspace) and then open a terminal window inside of Visual Studio Code (Terminal > New Terminal) which should appear at the bottom. 
+
+A very useful tool which you may find helpful for completing the exercises and debugging your code is a Read-Eval-Print Loop (or REPL for short). This is offered by many modern programming languages and development tools, including the Glasgow Haskell Compiler (which \bashIn{stack} is using behind the scenes). You can launch the REPL by invoking the following command in your terminal while in the \texttt{\small lab-fp} folder:
+\begin{minted}{bash}
+$ stack repl
+\end{minted}
+This loads the code for these exercises and allows you to enter arbitrary expressions which the REPL will evaluate for you. You should see something similar to the following prompt:
+\begin{minted}{haskell}
+*Lab Lab>
+\end{minted}
+Simply enter an expression like \haskellIn{1+1} and hit enter to evaluate it. The REPL will print the result of evaluating the expression:
+\begin{minted}{haskell}
+*Lab Lab> 1+1
+2
+\end{minted}
+There is a \texttt{\small src/Lab.hs} file in the \texttt{\small lab-fp} directory which contains some definitions for this lab. Because we have run \bashIn{stack repl} in the directory with the code (\texttt{\small lab-fp}), the REPL has automatically loaded the the \texttt{\small src/Lab.hs} file for us, so you can refer to definitions in it:
+\begin{minted}{haskell}
+*Lab Lab> name
+"Michael"
+*Lab Lab> age * 2
+60
+\end{minted}
+
+\task{Open the \texttt{\small src/Lab.hs} file in your preferred text editor and modify the definitions of \haskellIn{age} and \haskellIn{name} to match your name and age.}
+
+Instead of typing an expression which should be evaluated by the REPL, you may also type in a command (all commands start with a colon). The following commands are supported (among others):
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline 
+    \texttt{\small :q}   & Quits the REPL. \\ 
+\hline 
+    \texttt{\small :r}  & Reloads all files that are currently loaded. \\ 
+\hline 
+    \texttt{\small :l FILENAME} & Loads \texttt{\small FILENAME} into the REPL. \\
+\hline
+\end{tabular} 
+\end{center}
+Assuming you did not close the REPL, it will still be running. The REPL does not automatically check for updates to any files that are currently loaded, so you will have to reload it with the \texttt{\small :r} command. In general, the \texttt{\small :r} command reloads all files that are loaded in the REPL. Now try evaluating \haskellIn{age} and \haskellIn{name} again. They should match whatever values you changed them to.
+
+\task{Complete the definitions of \haskellIn{triple}, \haskellIn{not}, \haskellIn{and}, \haskellIn{max}, and \haskellIn{perimeterRect} in \texttt{\small src/Lab.hs} according to the instructions provided there. You can test them in the REPL to see if you have got them right. Remember to reload the file once you have made some changes.}
+
+\task{The skeleton code for these exercises also comes with a test suite which you can use to test the correctness of your functions. Simply run \texttt{\small stack test} in a terminal window (not in the REPL!) to run all unit tests against your code. At this point, all of the tests for the previous exercises should pass and all the ones for the following exercises should fail. For all failed tests, there will be an explanation of why they failed. If all of the tests for the previous tasks pass, you can proceed. As you progress through the following exercises, you may wish to re-run \texttt{\small stack test} whenever you want to test your answers.}
+
+\taskLine
+
+\task{With the help of the \haskellIn{reverse} function from the standard library, which reverses lists, complete the definition of \haskellIn{isPalindrome} which checks whether a list of characters is a palindrome. For example:}
+\begin{minted}{haskell}
+isPalindrome "radar" ==> True 
+isPalindrome "2020"  ==> False
+\end{minted}
+
+\taskLine 
+
+Just like lists are constructed by ``cons''-ing elements to smaller lists, starting with the empty list, lists can be deconstructed through pattern-matching by ``uncons''-ing elements from the start of a list. For example, the \haskellIn{head} function returns the first element of a list and discards the rest:
+\begin{minted}{haskell}
+head (x:xs) = x
+\end{minted}
+We can have nested patterns so that \emph{e.g.} the following function will retrieve the second element of a list:
+\begin{minted}{haskell}
+headOfTail (x:y:xs) = y
+\end{minted}
+Note that this is not a function you should ever write though, since it will crash for any list that does not have at least two elements. The \haskellIn{head} function will also crash if it is given a list that does not have at least one element.
+
+\task{Complete the definition of \haskellIn{validModuleCode} which should determine whether a given argument is a valid Computer Science module code. For the purpose of this exercise, a valid module code consists of five characters: the letters \haskellIn{'c'} and \haskellIn{'s'}, followed by three digits. You may find the \haskellIn{isDigit} function from \haskellIn{Data.Char} useful. For example:}
+\begin{minted}{haskell}
+validModuleCode ['c','s','1','4','1'] => True 
+validModuleCode ['c','s','2','6','3'] => True
+validModuleCode ['c','s','4','0','7'] => True
+validModuleCode ['e','s','1','4','1'] => False
+validModuleCode ['c','a','k','e','s'] => False
+validModuleCode ['l','i','e']   => False
+\end{minted}
+Note that writing \haskellIn{"cs141"} means the same as \haskellIn{['c','s','1','4','1']} in Haskell.
+
+\taskLine
+
+\task[task:elem-explicit]{Using recursion, complete the definition of the \haskellIn{elem} function which should determine whether some value is contained in a list of values. For example, \haskellIn{elem 4 [4,8,15,4]} should evaluate to \haskellIn{True} and \haskellIn{elem 7 [4,8,15,4]} should evaluate to \haskellIn{False}.}
+
+\task{Using recursion, complete the definition of \haskellIn{maximum} which should find the greatest element of the list given as argument. For example, \haskellIn{maximum [1,2,3,2,1]} should evaluate to \haskellIn{3}. You may assume that \haskellIn{maximum} will never be called with the empty list so you do not need to define an equation for that case.}

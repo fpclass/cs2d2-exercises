@@ -1,0 +1,331 @@
+% \vspace{0.5cm}
+% \textbf{\LARGE } % {\LARGE \color{gray} Monday afternoon}
+\section{Monday afternoon - Java refresher}	
+
+In this session you will work through some short exercises to refresh your knowledge of programming in Java, which is an imperative, object-oriented programming language. Programs written in imperative programming languages are sequences of instructions which tell the computer \emph{how} to do something.
+
+There are two parts to this set of exercises: the first is a refresher of Java basics and the goal of the second part is to implement the well known game of Hangman. If you are confident in your Java skills, feel free to skip the first part and go straight to the second.
+
+Open Visual Studio Code and open the folder you have extracted from \texttt{java.zip} (File > Add folder to workspace) and then open a terminal window inside of Visual Studio Code (Terminal > New Terminal) which should appear at the bottom. 
+
+\taskLine
+
+\task{Whenever you want to run your code, click on the terminal window and type the following:}
+\begin{minted}{bash}
+gradle run
+\end{minted}
+Press enter to run the command. Try this now! This will run your program (or complain if there are errors in your code). For now, your program does not do anything and the output should be roughly as follows:
+\begin{minted}{bash}
+[username@machine]$ gradle run 
+
+Welcome to Gradle 4.9!
+[some more text]
+
+
+[username@machine]$ 
+\end{minted}
+This may be different from what you may have done in the past to compile and run a Java program. Gradle is an example of a build tool -- a tool which automates build processes, dependency management, and other such tasks. In practice, most realistic software projects would use such build tools. We won't go into much more detail about build tools in this module, but we will use them where appropriate to simplify our lives!
+\taskLine
+
+This welcome message you saw only appears the first time you run \texttt{gradle run} and from now on only your program's output will be shown. For example, if you type \texttt{gradle run} a second time and press enter, there won't be any output:
+\begin{minted}{bash}
+[username@machine]$ gradle run 
+[username@machine]$ 
+\end{minted}
+
+\section*{Imperative Programming}
+
+To edit the code, open the \texttt{src/main/java/Hangman.java} file using the Explorer pane on the left of Visual Studio Code and you will find some initial code. You can ignore most of it for now and just focus on the following:
+\begin{minted}{java}
+public void run() {
+    // your program starts here
+}
+\end{minted}
+In the piece of code above, \texttt{run} is the name of a method that is being defined. The \texttt{void} keyword indicates that the method does not return a result and the empty parentheses \texttt{()} mean that the method has no parameters. The definition of this method consists solely of the following line:
+\begin{minted}{java}
+    // your program starts here
+\end{minted}
+Any line that starts with \texttt{//} is a comment and does nothing when the program is run. It's simply an annotation to remind us of what something does. Since there's only a comment, it's clear why the program doesn't do anything! Let's change that.
+
+\subsection*{Standard input and output} 
+
+When writing programs, we often want to interact with the person who is using our program to tell them what the program is doing or to ask the user to provide some information. We can write a message to the terminal by adding the following statement to the \texttt{run} method:
+\begin{minted}{java}
+    System.out.println("Hello World!");
+\end{minted} 
+This statement consists of a few parts which mean the following:
+\begin{itemize}
+	\item \texttt{System.out} refers to the terminal window
+	\item \texttt{println} is a method which displays some text and starts a new line (you can use \texttt{print} instead of \texttt{println} if you do not want to start a new line)
+	\item \texttt{"Hello World!"} is the text we want to display; it is used as an argument to the \texttt{println} method
+\end{itemize}
+In other words, whatever you put between the quotation marks will be displayed in the terminal. We usually give each statement its own line so that adding this statement to the \texttt{run} method results in the following:
+\begin{minted}{java}
+public void run() {
+    // your program starts here
+    System.out.println("Hello World!");
+}
+\end{minted}
+For example, if you run your program with \texttt{gradle run} in the terminal now, you should get \texttt{Hello World!} as output on its own line:
+\begin{minted}{bash}
+[username@machine]$ gradle run 
+Hello World!
+[username@machine]$ 
+\end{minted}
+\taskLine
+\task{You can have as many statements in your \texttt{run} method as you like and they will be executed in order one after another. Try modifying the definition of the \texttt{run} method so that you get the following output:}
+\begin{minted}{bash}
+[username@machine]$ gradle run 
+Hello World!
+Goodbye World!
+[username@machine]$ 
+\end{minted}
+\taskLine
+
+\task{To ask the user for input, you can use the following statement:}
+\begin{minted}{java}
+    console.readLine();
+\end{minted}
+Try adding this to the \texttt{run} method. When you run the program with \texttt{gradle run}, the program will wait for you to enter some text and press enter before proceeding.
+\taskLine 
+
+\subsection*{Variables}
+
+As we know, computation in imperative programming languages is accomplished by mutating values in memory. Variables are names we give to particular locations in memory, so that we can refer to them more easily. 
+
+Asking the user for input is not very useful on its own. We want to be able to do something with whatever text the user has entered. Below is an example of a program which asks the user for their name and stores whatever the user enters in a variable named \texttt{name}: 
+\begin{minted}{java}
+    System.out.println("What is your name?");
+    String name = console.readLine();
+\end{minted}
+The second line defines the variable called \texttt{name}. The \texttt{String} token which precedes the name of the variable indicates the it will be used to store text. We refer to this as a \emph{type}. We will see other types that variables can have later. The part after the equal sign \texttt{=} determines the initial value of the variable: in this case, it is the result of getting the user to provide some input which is returned by the \texttt{readLine} method.
+
+Once we have stored some data like the user's input in a variable, we can use the value of that variable later on in the program. For example, you could add the following statement to your program to display the value of \texttt{name}:
+\begin{minted}{java}
+    System.out.println(name);
+\end{minted}
+\taskLine 
+\task{Add the three statements from above into your \texttt{run} method, run the program, and see what happens!}
+\taskLine 
+
+\task{Strings can also be combined with the \texttt{+} operator. For example, try modifying the last statement to the following and then run your program again:}
+\begin{minted}{java}
+System.out.println("Your name is " + name);
+\end{minted}
+\taskLine 
+\task{Try asking the user for a bunch of information about themselves, such as their favourite colour, age (you may wish to use the \texttt{readInt} method of the \texttt{console} object for this if you want the age as an integer), etc. and display those back to them.}
+\taskLine 
+
+\task{The value of a variable can be changed at any point after it has been initially assigned. Try running this program:}
+\begin{minted}[]{java}
+System.out.println("What is your name?");
+
+String name = console.readLine();
+System.out.println("Your name is " + name);
+
+name = "Darth Vader";
+System.out.println("Now your name is " + name);
+\end{minted}
+The \mintinline{java}{name = "Darth Vader";} statement changes the value of \texttt{name} to \linebreak \mintinline{java}{"Darth Vader"} for subsequent statements. 
+\taskLine
+
+\subsection*{Conditions}
+
+Sometimes you may want to do different things depending on what the value of some variable is. For this, you can use \mintinline{java}{if}-statements. For example:
+\begin{minted}{java}
+System.out.println("What is the secret password?");
+String password = console.readLine();
+
+if(password == "password123") {
+    System.out.println("You need a better password...");
+}
+\end{minted}
+
+\taskLine 
+
+\task{Try this out now! Once you have it working, try adding some different responses to some other questions. You can also use the \mintinline{java}{!=} operator instead of \mintinline{java}{==} to test if something is not equal, rather than equal.}
+
+\taskLine 
+
+\subsection*{Loops}
+
+The code below is for a program which calculates the factorial of a number entered by the user and then displays the result in the standard output:
+\begin{minted}{java}
+public void run() {
+    // your program starts here
+    System.out.println("Enter a number:");
+    int n = console.readInt();
+
+    int x = 1;
+    for (int i=1; i<=n; i++)
+        x *= i; 
+
+    System.out.println("The factorial of " + n + " is " + x);
+}
+\end{minted}
+
+There are a number of new things here:
+\begin{itemize}
+	\item \mintinline{java}{int} is the type of integers, used to indicate that the variable named \mintinline{java}{n} stores a number
+	\item \mintinline{java}{console.readInt} reads an integer from the input 
+	\item There is a \mintinline{java}{for}-loop in the code:
+	\begin{minted}{java}
+	for (int i=1; i<=n; i++)
+	    x *= i; 
+	\end{minted}
+	This does the following: 
+	\begin{enumerate}
+		\item First, a new variable named \texttt{i} is initialised with a value of \texttt{1}. This is expressed by the \mintinline{java}{int i=1;} part.
+		\item The \mintinline{java}{i<=n;} part checks if \texttt{i} is less than or equal to \texttt{n}:
+		\begin{itemize}
+			\item If it is, we multiply \texttt{x} with \texttt{i} and store the result in \texttt{x}. \mintinline{java}{x *= i} is short for  \mintinline{java}{x = x * i}. After we have updated \texttt{x}, the \mintinline{java}{i++} part tells the computer to increment \texttt{i} by \texttt{1}. \mintinline{java}{i++} is short for \mintinline{java}{i = i + 1}. We then go back to Step 2, thus creating a loop.
+			\item If \texttt{i} is not less than or equal to \texttt{n}, we continue with the next statement in the program after the loop.
+		\end{itemize}
+	\end{enumerate}
+	Note that the \emph{body} of a for-loop can be a sequence of statements, just like the body of a method. The loop shown above could also be written as:
+	\begin{minted}{java}
+	for (int i=1; i<=n; i++) {
+	    x *= i; 
+	}
+	\end{minted}
+	If there is only one statement, we do not need the curly brackets. If there is more than one statement in the body of the for-loop, we do need them.
+\end{itemize}
+
+\subsection*{Arrays}
+
+Sometimes we want a variable to store multiple things of some type. For example, for our hangman game we will want a way of representing all the characters in a word individually. We can do this with the help of \emph{arrays}. The following code demonstrates how to use an array of characters:
+\begin{minted}{java}
+System.out.println("Enter your name:");
+String name = console.readLine();
+char[] letters = name.toCharArray();
+System.out.println(
+    "The first character of your name is " + letters[0]);
+\end{minted}
+\taskLine 
+\task{Try running this program!}
+\taskLine 
+
+The program above demonstrates several aspects of arrays. Firstly, let's look at the following line:
+\begin{minted}{java}
+char[] letters = name.toCharArray();
+\end{minted}
+This creates a new variable named \mintinline{java}{letters} of type \mintinline{java}{char[]}. The \mintinline{java}{char} type represents individual characters and the square brackets \mintinline{java}{[]} afterwards denote that we not just have one character, but an array of them. The part after the equal sign determines the initial value. In this case, we use the \mintinline{java}{toCharArray} method to convert \mintinline{java}{name} (which is a string) to an array of characters. Another possible way to initialise an array is as follows:
+\begin{minted}{java}
+char[] arrayOfChars = new char[10];
+\end{minted}
+Arrays always have a fixed size. The \mintinline{java}{toCharArray} method figures out what the size of the resulting array should be based on the length of its argument, which is \mintinline{java}{name} in the example above. We can manually create arrays of a specific size as shown in this example, where we create an array with space for ten \mintinline{java}{char} values. Below are some more examples of different arrays:
+\begin{minted}{java}
+// an array of five int values
+int[] arrayOfInts = new int[5];
+
+// an array of three String values 
+String[] arrayOfStrings = new String[3];
+\end{minted}
+The elements of arrays can be read and written to individually. In the example program, the following line accesses the first element of the \mintinline{java}{letters} array with \mintinline{java}{letters[0]}:
+\begin{minted}{java}
+System.out.println(
+    "The first character of your name is " + letters[0]);
+\end{minted}
+The indices of arrays start at 0, so if an array named \mintinline{java}{array} has three elements, then you can access them with \mintinline{java}{array[0]}, \mintinline{java}{array[1]}, and \mintinline{java}{array[2]} respectively.
+
+To store a value in an array, simply write something like the following (assuming that \mintinline{java}{array} is an array of \mintinline{java}{char} values):
+\begin{minted}{java}
+array[0] = 'F';
+\end{minted}
+This will store the character F in the first element of the array.
+
+\taskLine 
+
+\task{Complete the factorial program below so that all intermediate values are stored in an array and the result can then be retrieved from the array:}
+\begin{minted}{java}
+public void run() {
+    // your program starts here
+    System.out.println("Enter a number:");
+    int n = console.readInt();
+
+    int x = 1;
+    int[] values = new int[n+1];
+    values[0] = 1;
+    
+    for (int i=1; i<=n; i++) {
+        x *= i; 
+    }
+
+    System.out.println(
+        "The factorial of " + n + " is " + values[n]);
+}
+\end{minted}
+
+\taskLine 
+
+\task{Complete the definition of the \texttt{areEqual} method which compares whether two arrays of characters \texttt{xs} and \texttt{ys} are the same. This method returns a value of type \mintinline{java}{Boolean}, which has two values: \mintinline{java}{true} and \mintinline{java}{false}:}
+\begin{minted}{java}
+private Boolean areEqual(char[] xs, char[] ys) {
+    // check that both arrays have the same length
+    if(xs.length != ys.length) {
+        return false;
+    }
+
+    // loop through the arrays
+    for(int i=0; i<xs.length; i++) {
+        // TODO: your code here
+    }
+
+    // we have made it this far, the two arrays are equal
+    return true;
+}
+\end{minted}
+\emph{Hint}: if you determine that the two arrays are not equal, you can use \mintinline{java}{return false;} to return \mintinline{java}{false} from the method.
+
+To test your method, you can do the following:
+\begin{minted}{java}
+public void run() {
+    // your program starts here
+    System.out.println("Enter two words:");
+    char[] wordA = console.readLine().toCharArray();
+    char[] wordB = console.readLine().toCharArray();
+
+    if(areEqual(wordA, wordB)) {
+        System.out.println("The two words are the same!");
+    }
+    else {
+        System.out.println("The two words are NOT the same!");
+    }
+}
+\end{minted}
+Note that the \mintinline{java}{else}-statement can be used to execute some code if the condition of the \mintinline{java}{if}-statement is not true.
+\taskLine 
+	
+\section*{Hangman}
+
+We have covered some of the basics and are now ready to start working on our Hangman game. It may be useful to revert the definition of your \texttt{run} method to what it was initially now or comment out the statements you have added to it:
+\begin{minted}{java}
+public void run() {
+    // your program starts here
+}
+\end{minted}
+
+\taskLine
+\task{Ask the user to enter a word and store that word in a variable named \mintinline{java}{word}.}
+\taskLine 
+\task{Use the \mintinline{java}{word.toCharArray()} method to convert the user's input into an array of characters.}
+\taskLine 
+\task{Implement the \mintinline{java}{mask} method which should create an array of the same size as the input (this part is already done for you) and then fill all the elements with \mintinline{java}{'*'} except for whitespaces.}
+\taskLine
+\task{Use the \mintinline{java}{mask} method to create a masked copy of the word.}
+\taskLine 
+\task{Implement the \mintinline{java}{unmask} method which should count how many times \mintinline{java}{c} occurs in \mintinline{java}{word} and return that number. It should also ``unmask'' the corresponding elements in \mintinline{java}{guessed}. For example, if \mintinline{java}{c} is \mintinline{java}{'e'} and \mintinline{java}{word} contains \mintinline{java}{'e'} in the 2nd and 4th element, then the 2nd and 4th element of \mintinline{java}{guessed} should be set to \mintinline{java}{'e'}.}
+\taskLine 
+\task{Write a loop which prompts the user to input a character using the \mintinline{java}{console.readChar} method until the word has been guessed. Use the \mintinline{java}{unmask} and \mintinline{java}{areEqual} methods to help you here.}
+\taskLine 
+\task{Once you have a basic version of the game working, you can start counting how many attempts it takes the user to guess a word. You could implement a limit so that, if the player doesn't guess the word within some number of attempts, they lose. If you want to be creative, you can try and use \mintinline{java}{System.out.println} to ``draw'' a small illustration corresponding to how many guesses have been made.}
+\taskLine 
+
+\section*{Extensions}
+
+If you have got this far, you can try to let the computer guess words you enter. Here are three suggestions for approaches the computer could take:
+\begin{itemize}
+	\item (Easy) Guess each character from the alphabet in order from A-Z.
+	\item (Intermediate) Randomly guess a character from the alphabet. You may then need to keep track of which characters have been guessed already in order to avoid duplicate guesses.
+	\item (Advanced) Use a dictionary (there is one supplied in the folder you are given as \texttt{dictionary.txt}) to allow your AI to make more informed choices about which characters to guess. 
+\end{itemize}

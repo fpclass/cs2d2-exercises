@@ -1,0 +1,66 @@
+\section{Thursday afternoon - Modern systems programming}
+
+The goal of this lab is to re-implement Hangman from the previous Java lab, but in Rust. The archive you downloaded contains some skeleton code to get you started (in the \texttt{\small lab-rust} folder). 
+
+Rust is not installed on the DCS machines, but you can complete the exercises in web-based environments such as: 
+\begin{center}
+    \url{https://play.rust-lang.org/}
+\end{center}
+or
+\begin{center}
+    \url{https://replit.com/languages/rust}
+\end{center}
+If you prefer to install Rust on your own machine, refer to the instructions at: 
+\begin{center}
+    \url{https://www.rust-lang.org/learn/get-started}
+\end{center}
+
+The official book about Rust is a great reference if you forget how to do something in Rust (but you can always ask us, too!):
+\begin{center}
+    \url{https://doc.rust-lang.org/book/title-page.html}
+\end{center}
+
+\subsection*{Hangman}
+
+\task{Implement a function \texttt{\small mask} similar to the one you implemented in the Java lab on Monday. This function should take a string as input, which will continue to be needed by the caller, and return a new string which represents a masked version of the input.}
+
+You will need to initialise a new string and add a \texttt{\small '*'} character for every character in the input string. The \texttt{\small push} method of strings is useful for this. Note also that the characters of a string can be accessed with the \texttt{\small chars} method. For example:
+\begin{minted}{rust}
+fn foo() {
+    let s = String::from("Hello!");
+
+    for c in s.chars() {
+        println!("{}", c);
+    }
+}
+\end{minted}
+New strings can be created with \mintinline{rust}{String::new()} or alternative with, for example, \mintinline{rust}{String::with_capacity(5)} to initialise a string with an initial capacity of 5. Using \mintinline{rust}{with_capacity} is more efficient if you know how much space you will need.
+
+\task{Implement a function \texttt{\small unmask} similar to the one you implemented in the Java lab on Monday. This function should take as inputs: a string representing the word that is being guessed, a string representing the current guess so far and which should be updated, and the character most recently entered by the user. Think carefully about the types of the parameters. The function should return an \texttt{\small i32} representing the number of times the guessed character appears in the word.}
+
+Hints: you will need to loop through the characters in the word. There are different approaches for this, but remember that you can access the characters with the \texttt{\small chars} method. We have also provided, for convenience, a function \texttt{\small set\_char} which you can use to replace the character of a string at a specified index. It takes in the string to update, the index at which to replace the character, and the character to put there. 
+
+\task{Once you have completed the \texttt{\small mask} and \texttt{\small unmask} functions, complete the main game loop in the \texttt{\small main} function, so that it does the following:}
+\begin{itemize}
+    \item Prompts the user for a word.
+    \item Masks that word.
+    \item Until the word is guessed: 
+    \begin{itemize}
+        \item Prompt the user to enter a character. We provide the \mintinline{rust}{read_char} function for this.
+        \item Use \mintinline{rust}{unmask} with the word, guessed word so far, and character.
+    \end{itemize}
+\end{itemize}
+
+\taskLine
+
+\section*{Extensions}
+
+If you have got this far, you could try some of the following extensions:
+\begin{itemize}
+    \item Impose a limit on the number of wrong guesses before the player loses.
+	\item Implement a guessing algorithm where the computer guesses each character from the alphabet in order from A-Z. You could \emph{e.g.} initialise a string with the alphabet:
+	\begin{minted}{rust}
+let alphabet = String::from("abcdefghijklmnopqrstuvwxyz");
+    \end{minted}
+	\item Prevent the user from guessing the same character more than once. You may then need to keep track of which characters have been guessed already\footnote{The \mintinline{rust}{Vec} type might be helpful: \url{https://doc.rust-lang.org/std/vec/index.html}}. 
+\end{itemize}

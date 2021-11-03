@@ -1,0 +1,59 @@
+% !TEX options = -shell-escape -synctex=1 -interaction=nonstopmode -file-line-error "%DOC%"
+
+\documentclass[]{uow-exercises}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{minted}
+\usepackage[
+backgroundcolor = gray!5
+, hidealllines=true
+]{mdframed}
+
+\surroundwithmdframed{minted}
+\usemintedstyle{lovelace}
+
+\author{Michael B. Gale}
+\title{CS2D2}
+
+\setminted[haskell]{fontsize=\small}
+\setminted[bash]{fontsize=\small}
+\newcommand{\haskellIn}[1]{\mintinline[fontsize=\small]{haskell}{#1}}
+\newcommand{\bashIn}[1]{\mintinline[fontsize=\small]{bash}{#1}}
+
+\begin{document}
+
+\fancyhead[LE, RO]{\emph{CS2D2 Programming Paradigms}}
+\pagestyle{fancy}
+\thispagestyle{fancy}
+
+\begin{center}
+    \textbf{\LARGE CS2D2 Coursework}
+\end{center} \hrule \vspace{0.5cm}
+
+You are working for an established software company which is providing card payment services to online retailers through a web-based API. The existing backend platform is largely written in Java and interacts with the various payment gateways. Due to increasingly severe outages, the Tech Lead in charge of the backend is proposing to re-implement the system from the ground up in Haskell.
+
+Write a 3000 word report analysing the choice of programming language for this project. Your report should address at least all of the following:
+\begin{itemize}
+    \item An analysis of the project's requirements with respect to its implementation language(s).
+    \item A discussion of the pros and cons of the Tech Lead's choice of programming language for this project.
+    \item Your recommendation of programming language for the project, whether you agree with the Tech Lead or not, and a justification.
+\end{itemize}
+As part of your report, you are encouraged to further research relevant aspect of the programming languages you consider. Among other things this could include the following:
+\begin{itemize}
+    \item The availability of relevant libraries or whether they would have to be written from scratch for the project. 
+    \item The availability of development tools.
+    \item How well the language is supported by the existing infrastructure (hardware, software, virtualisation, etc.) used by your company.
+\end{itemize}
+You should provide a bibliography with references to all sources you consider as part of this process.
+
+Submit your report, as a PDF, no later than noon on Friday, 27 October at:
+\begin{center}
+    \url{https://tabula.warwick.ac.uk/coursework/submission/9fa21947-417d-4614-9950-b82eb3652aa0}
+\end{center}
+There is no ``correct'' recommendation for you to make. Instead, your report will be assessed on the quality of your technical analysis with respect to the requirements, pros and cons for various options (40\%), the strength of your justification (40\%), and the overall quality of your writing, which includes the quality and quantity of your references (20\%). 
+
+	
+\end{document}
+

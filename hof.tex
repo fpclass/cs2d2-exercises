@@ -1,0 +1,101 @@
+\section{Wednesday afternoon - Higher-order programming}
+
+Open Visual Studio Code and open the \texttt{\small lab-hop} folder you have extracted from the \texttt{haskell.zip} archive (File > Add folder to workspace) and then open a terminal window inside of Visual Studio Code (Terminal > New Terminal) which should appear at the bottom. 
+
+The goal of this lab will be to implement \emph{Picross} or nonogram puzzles in Haskell. If you are unfamiliar with these puzzles, you can find an explanation and an example at
+\begin{center}
+    \url{https://en.wikipedia.org/wiki/Nonogram}
+\end{center}
+In a nutshell, we have an (initially empty) grid of pixels where the goal of the puzzle is to determine which of these pixels should be filled in and which ones should not be in order to form an image. To help with this, rows and columns are annotated with integers which describe the length of uninterrupted sequences of filled pixels in a given row or column. For example, if a row is annotated with \texttt{\small 2, 4} it means that there is one sequence of two filled pixels and one sequence of four filled pixels in the row -- the two sequences cannot touch. All other pixels in the row are unfilled.
+
+The \texttt{\small src/Picross.hs} file in the \texttt{\small lab-hop} directory contains the definitions we need to complete to implement the game. The REPL (\texttt{\small stack repl}) can be used to test your functions and, once complete, you can run the game with \texttt{\small stack run}.
+
+\taskLine
+
+We represent images as lists of lists of integers. For example, 
+\begin{center}
+    \haskellIn{[[1,0,1], [0,1,0], [1,0,1]]} 
+\end{center}
+represents a 3x3 image where the four corners and the middle are filled in. That is, we use \haskellIn{1} to mean ``filled'' and \haskellIn{0} to mean ``unfilled''. We will also later use \haskellIn{-1} to mean a pixel for which we don't yet know whether it is filled or not.
+
+\task{Implement the \haskellIn{makeBlank} function which, given an image (a list of rows), should replace the values of all pixels with \haskellIn{-1}. For example:}
+\begin{minted}{haskell}
+makeBlank [[1,1,0,1,1,1], [1,0,1,0,1,0]]
+ => [[-1,-1,-1,-1,-1,-1], [-1,-1,-1,-1,-1,-1]]
+\end{minted}
+
+For all of the following tasks, note that in Haskell a string is just a list of characters. For example, writing \haskellIn{"at"} is the same as \haskellIn{['a', 't']} and can be written interchangeably. Particularly when testing things in the REPL, do not be surprised if you get a result in the string notation, rather than in the list of characters notation.
+
+\task{Implement the \haskellIn{showCell} function which, given an integer representing a width \haskellIn{w} and an integer representing the value of a pixel, should return \haskellIn{w}-many copies of the \haskellIn{symbol} representing the pixel value. For example:}
+\begin{minted}{haskell}
+showCell 3 1 => ['X', 'X', 'X']
+showCell 3 (-1) => ['?', '?', '?']
+showCell 2 1 => ['X', 'X']
+\end{minted}
+Hint: use the \haskellIn{symbol} function, which is already provided for you, to obtain the character corresponding to the pixel value. 
+
+\task{Implement the \haskellIn{showRow} function which, given a width and a row of pixels, should return the results of \haskellIn{showCell} for each pixel in a list. For example:}
+\begin{minted}{haskell}
+showRow 2 [1,1,(-1)]
+ => [['X', 'X'], ['X', 'X'], ['?', '?']]
+\end{minted}
+
+\task{Implement the \haskellIn{pad} function which, given an integer representing a length \haskellIn{n} and a string (list of characters) should return that string, padded with whitespaces up to the length \haskellIn{n}. For example:}
+\begin{minted}{haskell}
+pad 4 "ab" => "ab  "
+pad 2 "ab" => "ab"
+pad 1 "ab" => "ab"
+pad 5 "ab" => "ab   "
+\end{minted}
+
+\taskLine
+
+\task{To help in creating nonograms from images, implement the \haskellIn{sequences} function which, given a row, returns a list of the ``hints'' for the row. For example:}
+\begin{minted}{haskell}
+sequences [1,1,0,1,1,1] => [2,3]
+sequences [1,0,1,0,1] => [1,1,1]
+sequences [0,0,0] => []
+\end{minted}
+There are many different approaches you could take to implementing this: 
+\begin{itemize}
+    \item You could use functions we have covered in the lectures, plus some helper functions you write yourself or from the \haskellIn{Data.List} module in Haskell's standard library: \url{https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html}
+    \item You could write a recursive function which does it for you instead.
+    \item You could read about list comprehensions and use these to simplify parts of the definition: 
+    
+    {\small \url{http://learnyouahaskell.com/starting-out#im-a-list-comprehension}}
+\end{itemize}
+
+\task{Implement the \haskellIn{rows} function which, given a list of rows, should determine the hints for all the rows and return them in a list. For example:}
+\begin{minted}{haskell}
+rows [[1,1,0,1,1,1], [1,0,1,0,1,0]]
+ => [[2,3], [1,1,1]]
+\end{minted}
+
+\task{Implement the \haskellIn{columns} function which, given a list of rows, should determine the hints for all the \emph{columns} and return them in a list. For example:}
+\begin{minted}{haskell}
+columns [[1,1,0,1,1,1], [1,0,1,0,1,0]]
+ => [[2],[1],[1],[1],[2],[1]]
+\end{minted}
+Hint: you may find the \haskellIn{transpose} function helpful\footnote{\url{https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html\#v:transpose}}.
+
+\taskLine
+
+\task{Implement the \haskellIn{showLabel} function, which given the result of \haskellIn{rows} or \haskellIn{columns}, i.e. a list of integers representing a hint, should format it as a comma-separated string. For example:}
+\begin{minted}{haskell}
+showLabel [2,3] => "2,3"
+showLabel [2] => "2"
+showLabel [1,1,1] => "1,1,1"
+\end{minted}
+Hint: the \haskellIn{show} function can be used to turn an integer into a string and you may find the \haskellIn{intercalate}\footnote{\url{https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html\#v:intercalate}} or \haskellIn{intersperse}\footnote{\url{https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-List.html\#v:intersperse}} functions helpful.
+
+\task{Implement the \haskellIn{showLabels} function which, given a list of hints, should compute the result of \haskellIn{showLabel} for each of them and return the results in a list. For example:}
+\begin{minted}{haskell}
+showLabels [[2,3], [1,1,1]]
+ => ["2,3", "1,1,1"]
+\end{minted}
+
+\taskLine
+
+\section*{Extensions}
+
+If you have got this far and still have time left or want to do this in your own time, you could try to write a function which, given the result of \haskellIn{makeBlank} and all the hints for the image, tries to find a solution for the puzzle.

@@ -1,0 +1,62 @@
+\documentclass[]{uow-exercises}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{minted}
+\usepackage[
+backgroundcolor = gray!5
+, hidealllines=true
+]{mdframed}
+
+\surroundwithmdframed{minted}
+\usemintedstyle{lovelace}
+
+\author{Michael B. Gale}
+\title{CS2D2}
+
+\setminted[haskell]{fontsize=\small}
+\setminted[bash]{fontsize=\small}
+\newcommand{\haskellIn}[1]{\mintinline[fontsize=\small]{haskell}{#1}}
+\newcommand{\bashIn}[1]{\mintinline[fontsize=\small]{bash}{#1}}
+
+\begin{document}
+
+\fancyhead[LE, RO]{\emph{CS2D2 Programming Paradigms}}
+\pagestyle{fancy}
+\thispagestyle{fancy}
+
+\begin{center}
+    \textbf{\LARGE CS2D2 Exercises - Wednesday}
+\end{center} \hrule \vspace{0.5cm}
+
+To get started, download the archive with the skeleton codes for today's labs from:
+\begin{center}\small
+    \url{https://warwick.ac.uk/fac/sci/dcs/teaching/material/cs2d2/haskell.zip}
+\end{center}
+
+\paragraph{DCS machines} The best way to complete the exercises is on the DCS machines. To get things set up there, simply run the following script in a terminal:
+\begin{minted}{bash}
+/modules/cs141/haskell-setup.sh
+\end{minted}
+This only needs to be done once. Close the terminal and open a new one afterwards.
+
+\paragraph{Own machine} If you prefer to work on your own device, you will need to install a few things. See the installation instructions at
+\begin{center}
+    \url{https://docs.haskellstack.org/en/stable/README/}
+\end{center}
+to install the Haskell tool stack. Once installed, run
+\begin{minted}{bash}
+stack setup --resolver=lts-16.27
+\end{minted}
+
+\paragraph{Web} You could also use an online tool such as
+\begin{center}
+    \url{https://replit.com/languages/haskell}
+\end{center}
+simply by copying and pasting your code into there, but you will be more limited in what you can do.
+
+\input{fp.tex}
+\input{hof.tex}
+	
+\end{document}
